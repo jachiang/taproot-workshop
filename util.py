@@ -101,7 +101,7 @@ class TestWrapper:
                 node.test_transaction = test_transaction.__get__(node)
             self.running = True
 
-        def create_spending_transaction(self, txid, version=1):
+        def create_spending_transaction(self, txid, version=1, nSequence=0):
             """Construct a CTransaction object that spends the first ouput from txid."""
             # Construct transaction
             spending_tx = CTransaction()
@@ -114,7 +114,7 @@ class TestWrapper:
 
             # Populate the transaction inputs
             outpoint = COutPoint(int(txid, 16), 0)
-            spending_tx_in = CTxIn(outpoint)
+            spending_tx_in = CTxIn(outpoint = outpoint, nSequence=nSequence)
             spending_tx.vin = [spending_tx_in]
 
             # Generate new Bitcoin Core wallet address
